@@ -24,7 +24,7 @@ import swaggerUi from 'swagger-ui-express';
 // Sirve para forzar que TODOS los modelos y sus asociaciones se registren en
 // Sequelize antes de atender la primera peticion. Si no se importara, un
 // `include` de un modelo aun no cargado podria fallar.
-// import './models/associations.js';
+import './models/associations.js';
 
 
 const app = express()
