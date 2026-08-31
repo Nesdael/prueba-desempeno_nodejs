@@ -15,8 +15,8 @@ async function starServer(){
         console.log('DB online')
 
         // --- Sincronizacion automatica de esquema ---
-        await db.sync({alter: true})
-        console.log('DB sincronizada')
+        // await db.sync({alter: true})
+        // console.log('DB sincronizada')
 
         // Levanta el servidor HTTP. A partir de aqui la API acepta peticiones.
         app.listen(PORT, () => {

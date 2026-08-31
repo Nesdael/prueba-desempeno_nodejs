@@ -25,6 +25,7 @@ import swaggerUi from 'swagger-ui-express';
 // Sequelize antes de atender la primera peticion. Si no se importara, un
 // `include` de un modelo aun no cargado podria fallar.
 import './models/associations.js';
+import router from './routes/index.routes.js';
 
 
 const app = express()
@@ -43,8 +44,6 @@ app.use(express.json());
 // )
 
 
-// Monta todas las rutas bajo el prefijo /api.
-// Ej: la ruta '/users' definida dentro del router se expone como /api/users.
-// app.use('/api', router)
+app.use('/api', router)
 
 export default app;
