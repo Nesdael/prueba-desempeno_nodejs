@@ -14,13 +14,9 @@ async function starServer(){
         await db.authenticate();
         console.log('DB online')
 
-        // --- Sincronizacion automatica de esquema (DESACTIVADA a proposito) ---
-        // db.sync({alter: true}) haria que Sequelize cree/modifique las tablas
-        // segun los modelos. Aqui NO se usa porque el proyecto maneja el esquema
-        // con MIGRACIONES (umzug), que es lo correcto en produccion: quedan
-        // versionadas, son reversibles y no borran datos por sorpresa.
-        // await db.sync({alter: true})
-        // console.log('DB sincronizada')
+        // --- Sincronizacion automatica de esquema ---
+        await db.sync({alter: true})
+        console.log('DB sincronizada')
 
         // Levanta el servidor HTTP. A partir de aqui la API acepta peticiones.
         app.listen(PORT, () => {
