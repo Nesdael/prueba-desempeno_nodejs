@@ -5,6 +5,7 @@ export const createMedicationSchema = z.object({
     presentation: z.string().min(3, "La presentación es obligatoria"),
 });
 
+// campos opcionales para permitir updates parciales
 export const updateMedicationSchema = createMedicationSchema.partial();
 
 export type CreateMedicationInput = z.infer<typeof createMedicationSchema>;

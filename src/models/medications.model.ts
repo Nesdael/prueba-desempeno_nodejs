@@ -33,12 +33,14 @@ Medications.init(
         sequelize: db,
         timestamps: false,
         tableName: "Medications",
+        // ojo: name ya es unico por si solo (ver arriba), asi que este indice
+        // compuesto no aporta nada mientras esa restriccion siga activa.
         indexes: [
             {
             unique: true,
             fields: ['name', 'presentation']
             }
-        ]   
+        ]
     }
 );
 

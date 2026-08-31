@@ -20,7 +20,7 @@ Warehouses.init(
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
+            unique: true // no puede haber dos almacenes con el mismo nombre
         },
         city_id: {
             type: DataTypes.UUID,

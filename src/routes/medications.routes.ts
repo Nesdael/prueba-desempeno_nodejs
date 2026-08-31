@@ -7,7 +7,7 @@ import { createMedicationSchema, updateMedicationSchema } from "../dto/medicatio
 
 const router = Router();
 
-
+// lectura: cualquier usuario autenticado. escritura: solo admin.
 router.get("/", verifyToken, medicationsController.getAll);
 router.get("/:id", verifyToken, medicationsController.getOne);
 router.post("/", verifyToken, checkRole("admin"), validateRequest(createMedicationSchema), medicationsController.create);

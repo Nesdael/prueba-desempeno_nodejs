@@ -19,6 +19,7 @@ const db = new Sequelize(
 
         port: Number(DATABASE_PORT) || 5342,
 
+        // timestamps apagado por defecto; cada modelo lo activa si lo necesita
         define: {
             timestamps: false
         }

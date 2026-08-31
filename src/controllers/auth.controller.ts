@@ -1,6 +1,10 @@
 import type { Request, Response } from "express";
 import { register, login } from "../services/auth.services.js";
 
+// register y login devuelven 400/401 en vez de propagar el error tal cual:
+// los mensajes vienen de las validaciones del servicio (Error("...")) asi que
+// se muestran directo al cliente.
+
 export const registerController = async (req: Request, res: Response): Promise<void> => {
     try {
         const user = await register(req.body);

@@ -8,6 +8,7 @@ export const createClinicSchema = z.object({
     manager_id: z.string().uuid("El id del responsable debe ser un UUID válido"),
 });
 
+// partial() vuelve todos los campos opcionales, para permitir updates parciales (PUT con solo algunos campos)
 export const updateClinicSchema = createClinicSchema.partial();
 
 export type CreateClinicInput = z.infer<typeof createClinicSchema>;

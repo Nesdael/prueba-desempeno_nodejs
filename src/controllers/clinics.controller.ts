@@ -1,6 +1,10 @@
 import type { Request, Response } from "express";
 import * as clinicsService from "../services/clinics.services.js";
 
+// getOne/update/remove usan findById, que tira Error si no existe -> 404.
+// create/update en 400 porque ahi suelen fallar las validaciones de negocio
+// (NIT duplicado, ciudad/manager inexistente).
+
 export const getAll = async (req: Request, res: Response): Promise<void> => {
     try {
         const clinics = await clinicsService.findAll();

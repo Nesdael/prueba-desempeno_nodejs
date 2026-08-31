@@ -57,6 +57,8 @@ Clinics.init(
 Cities.hasMany(Clinics, { foreignKey: "city_id", as: "clinics" });
 Clinics.belongsTo(Cities, { foreignKey: "city_id", as: "city" });
 
+// manager_id apunta a un Users, el alias va como "managedClinics" para no
+// chocar con el "clinics" que ya usa Cities.
 Users.hasMany(Clinics, { foreignKey: "manager_id", as: "managedClinics" });
 Clinics.belongsTo(Users, { foreignKey: "manager_id", as: "manager" });
 

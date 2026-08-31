@@ -42,6 +42,8 @@ Inventories.init(
         sequelize: db,
         timestamps: true,
         tableName: "Inventories",
+        // Un medicamento solo puede tener una fila de stock por almacen; para
+        // sumar/restar cantidad se actualiza esa fila, no se crea otra.
         indexes: [{ unique: true, fields: ["warehouse_id", "medication_id"] }],
     },
 );

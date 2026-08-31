@@ -1,3 +1,4 @@
+// Entrypoint de "npm run migrate:reverse": revierte la ultima migracion aplicada.
 import { migrator } from '../config/migrator.js';
 
 try {

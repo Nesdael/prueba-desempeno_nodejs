@@ -1,3 +1,4 @@
+// Entrypoint de "npm run seed": carga los datos iniciales (roles, ciudades, etc).
 import { seeder } from "./seeders.js";
 
 try {

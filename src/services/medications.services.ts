@@ -20,6 +20,8 @@ export const findById = async (id: string): Promise<Medications> => {
     return medication;
 };
 
+// esta validacion se hace aca ademas del indice unico del modelo para poder
+// devolver un mensaje claro antes de que Sequelize tire el error de la DB
 /** Crea un medicamento validando que no exista la misma combinación. */
 export const create = async (data: CreateMedicationInput): Promise<Medications> => {
     const existing = await Medications.findOne({

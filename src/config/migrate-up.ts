@@ -1,3 +1,4 @@
+// Entrypoint de "npm run migrate": aplica las migraciones pendientes.
 import { migrator } from "./migrator.js";
 
 try {

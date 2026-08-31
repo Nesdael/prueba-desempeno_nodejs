@@ -1,6 +1,9 @@
 import type { Request, Response } from "express";
 import * as warehousesService from "../services/warehouses.services.js";
 
+// mismo patron que clinics/medications: findById tira Error si no existe (404),
+// create/update devuelven 400 cuando falla una regla de negocio
+
 export const getAll = async (req: Request, res: Response): Promise<void> => {
     try {
         const warehouses = await warehousesService.findAll();

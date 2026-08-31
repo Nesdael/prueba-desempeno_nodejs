@@ -55,6 +55,9 @@ Users.init(
 Roles.hasMany(Users, { foreignKey: "role_id", as: "users" });
 Users.belongsTo(Roles, { foreignKey: "role_id", as: "role" });
 
+// El email siempre se guarda en minusculas para que el unique y el login
+// no dependan de como lo haya escrito el usuario. La password nunca se
+// guarda en texto plano.
 Users.beforeCreate(async (user) => {
     user.email = user.email.toLowerCase();
     user.password = await bcrypt.hash(user.password, 10);

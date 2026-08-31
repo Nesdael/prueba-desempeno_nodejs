@@ -1,3 +1,6 @@
+// Barrel: cada modelo ya declara sus propias asociaciones (hasMany/belongsTo)
+// en su propio archivo, aca solo se juntan los imports para que app.ts los
+// cargue todos con un solo import.
 import Cities from "./cities.model.js";
 import Roles from "./roles.model.js";
 import Medications from "./medications.model.js";

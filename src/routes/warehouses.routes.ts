@@ -7,6 +7,7 @@ import { createWarehouseSchema, updateWarehouseSchema } from "../dto/warehouses.
 
 const router = Router();
 
+// lectura: cualquier usuario autenticado. escritura: solo admin.
 router.get("/", verifyToken, warehousesController.getAll);
 
 router.get("/:id", verifyToken, warehousesController.getOne);

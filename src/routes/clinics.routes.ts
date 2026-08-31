@@ -7,6 +7,7 @@ import { createClinicSchema, updateClinicSchema } from "../dto/clinics.schema.js
 
 const router = Router();
 
+// lectura: cualquier usuario autenticado. escritura: solo admin.
 router.get("/", verifyToken, clinicsController.getAll);
 
 router.get("/:id", verifyToken, clinicsController.getOne);

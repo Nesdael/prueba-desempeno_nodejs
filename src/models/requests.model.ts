@@ -45,6 +45,9 @@ Requests.init(
             allowNull: false,
             validate: { min: 1 },
         },
+        // Flujo de una solicitud: pendiente -> aprobada/rechazada -> entregada.
+        // No hay todavia logica que fuerce ese orden, solo se valida que el
+        // valor este dentro de este set.
         status: {
             type: DataTypes.STRING,
             allowNull: false,

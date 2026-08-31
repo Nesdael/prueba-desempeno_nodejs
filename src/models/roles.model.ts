@@ -17,6 +17,7 @@ Roles.init(
             type: DataTypes.STRING,
             unique: true,
             allowNull: false,
+            // Roles cerrados a proposito, no hay endpoint para crear roles nuevos
             validate:{
                 isIn: [["admin", "manager"]]
             }
