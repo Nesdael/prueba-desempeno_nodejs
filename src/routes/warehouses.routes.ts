@@ -7,11 +7,69 @@ import { createWarehouseSchema, updateWarehouseSchema } from "../dto/warehouses.
 
 const router = Router();
 
+/**
+ * @swagger
+ * /api/warehouses:
+ *   get:
+ *     summary: Lista los almacenes activos
+ *     tags:
+ *       - Warehouses
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Listado de almacenes
+ *       401:
+ *         description: No autenticado
+ */
 // lectura: cualquier usuario autenticado. escritura: solo admin.
 router.get("/", verifyToken, warehousesController.getAll);
 
+/**
+ * @swagger
+ * /api/warehouses/{id}:
+ *   get:
+ *     summary: Consulta un almacén por id
+ *     tags:
+ *       - Warehouses
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string, format: uuid }
+ *     responses:
+ *       200:
+ *         description: Almacén encontrado
+ *       404:
+ *         description: Almacén no encontrado
+ */
 router.get("/:id", verifyToken, warehousesController.getOne);
 
+/**
+ * @swagger
+ * /api/warehouses:
+ *   post:
+ *     summary: Crea un almacén (solo admin)
+ *     tags:
+ *       - Warehouses
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Warehouse'
+ *     responses:
+ *       201:
+ *         description: Almacén creado
+ *       400:
+ *         description: La ciudad indicada no existe
+ *       403:
+ *         description: Rol sin permiso
+ */
 router.post(
     "/",
     verifyToken,
@@ -20,6 +78,34 @@ router.post(
     warehousesController.create,
 );
 
+/**
+ * @swagger
+ * /api/warehouses/{id}:
+ *   put:
+ *     summary: Actualiza un almacén (solo admin)
+ *     tags:
+ *       - Warehouses
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string, format: uuid }
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Warehouse'
+ *     responses:
+ *       200:
+ *         description: Almacén actualizado
+ *       400:
+ *         description: Datos inválidos
+ *       403:
+ *         description: Rol sin permiso
+ */
 router.put(
     "/:id",
     verifyToken,
@@ -28,6 +114,28 @@ router.put(
     warehousesController.update,
 );
 
+/**
+ * @swagger
+ * /api/warehouses/{id}:
+ *   delete:
+ *     summary: Elimina lógicamente un almacén (solo admin)
+ *     tags:
+ *       - Warehouses
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string, format: uuid }
+ *     responses:
+ *       200:
+ *         description: Almacén eliminado
+ *       404:
+ *         description: Almacén no encontrado
+ *       403:
+ *         description: Rol sin permiso
+ */
 router.delete("/:id", verifyToken, checkRole("admin"), warehousesController.remove);
 
 export default router;

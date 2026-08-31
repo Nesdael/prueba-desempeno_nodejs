@@ -10,8 +10,6 @@ async function starServer(){
         await db.authenticate();
         console.log('DB online')
 
-        // El esquema se maneja con migraciones (ver src/config/migrator.ts),
-        // por eso el sync queda apagado.
         // await db.sync({alter: true})
         // console.log('DB sincronizada')
 

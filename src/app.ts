@@ -4,9 +4,7 @@ import express from 'express'
 
 import swaggerUi from 'swagger-ui-express';
 
-// import router from './routes/index.routes.js';
-
-// import { swaggerSpec } from './config/swagger.js';
+import { swaggerSpec } from './config/swagger.js';
 
 // Solo se importa por el efecto secundario: registra los modelos y sus
 // asociaciones en Sequelize antes de que llegue la primera peticion.
@@ -18,11 +16,11 @@ const app = express()
 
 app.use(express.json());
 
-// Swagger pendiente por documentar, se deja comentado mientras tanto
-// app.use('/api/docs',
-//     swaggerUi.serve,
-//     swaggerUi.setup(swaggerSpec)
-// )
+// Interfaz interactiva de la API, generada a partir de los @openapi de cada rutas.ts
+app.use('/api/docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec)
+)
 
 
 app.use('/api', router)

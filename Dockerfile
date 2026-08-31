@@ -705,7 +705,7 @@ USER node
 # We execute the JavaScript that was previously generated
 # by the build stage:
 #
-# node dist/index.js
+# node dist/server.js
 #
 #
 # Production runtime flow:
@@ -717,17 +717,19 @@ USER node
 # npm run build
 #       |
 #       v
-# dist/index.js
+# dist/server.js
 #       |
 #       | copied into production stage
 #       v
 # Production container
 #       |
 #       v
-# node dist/index.js
+# node dist/server.js
 #
 #
 # Again, the JSON-array form is used so Docker starts Node.js
 # directly as the main container process.
 #
-CMD ["node", "dist/index.js"]
+# NOTE: the entrypoint is dist/server.js (compiled from src/server.ts),
+# not dist/index.js -- this project has no src/index.ts.
+CMD ["node", "dist/server.js"]
