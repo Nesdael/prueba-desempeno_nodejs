@@ -10,8 +10,10 @@ async function starServer(){
         await db.authenticate();
         console.log('DB online')
 
-        // await db.sync({alter: true})
-        // console.log('DB sincronizada')
+        // No hay migraciones: el esquema se crea/actualiza a partir de los
+        // modelos cada vez que arranca el server.
+        await db.sync({ alter: true })
+        console.log('DB sincronizada')
 
         app.listen(PORT, () => {
             console.log('Server running...')

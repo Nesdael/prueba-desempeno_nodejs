@@ -7,7 +7,7 @@ import * as requestsService from "../services/requests.services.js";
 export const create = async (req: Request, res: Response): Promise<void> => {
     try {
         // req.user lo llena verifyToken; queda registrado quien pidio el medicamento
-        const userId = (req as any).user.id;
+        const userId = req.user!.id;
         const request = await requestsService.create(req.body, userId);
         res.status(201).json(request);
     } catch (error) {
