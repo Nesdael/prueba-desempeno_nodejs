@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx tsx watch src/app.ts",
-      "seed": "tsx src/config/seeders-up.ts",
+    "dev": "npx tsx watch src/server.ts",
+    "seed": "tsx src/config/seeders-up.ts",
     "seed:down": "tsx src/config/seeders-down.ts",
     "migrate": "tsx src/config/migrate-up.ts",
-    "migrate:reverse": "tsx src/config/migrate-reverse.ts"
-    
+    "migrate:reverse": "tsx src/config/migrate-reverse.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "repository": {
     "type": "git",

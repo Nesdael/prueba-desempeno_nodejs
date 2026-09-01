@@ -1,3 +1,4 @@
+// Entrypoint de "npm run seed:down": revierte el ultimo seeder aplicado.
 import { seeder } from "./seeders.js";
 
 try {
