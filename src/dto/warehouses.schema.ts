@@ -6,7 +6,6 @@ export const createWarehouseSchema = z.object({
     city_id: z.string().uuid("El id de la ciudad debe ser un UUID válido"),
 });
 
-// campos opcionales para permitir updates parciales
 export const updateWarehouseSchema = createWarehouseSchema.partial();
 
 export type CreateWarehouseInput = z.infer<typeof createWarehouseSchema>;

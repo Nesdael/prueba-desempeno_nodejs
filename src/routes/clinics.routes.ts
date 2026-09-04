@@ -103,6 +103,8 @@ router.post(
  *         description: Clínica actualizada
  *       400:
  *         description: Datos inválidos
+ *       404:
+ *         description: Clinica no encontrada
  *       403:
  *         description: Rol sin permiso
  */

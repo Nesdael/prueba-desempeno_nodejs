@@ -103,6 +103,8 @@ router.post(
  *         description: Almacén actualizado
  *       400:
  *         description: Datos inválidos
+ *       404:
+ *         description: Almacen no encontrado
  *       403:
  *         description: Rol sin permiso
  */

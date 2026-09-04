@@ -8,6 +8,8 @@ export interface AuthPayload {
     role: string;
 }
 
+// Se anade `user` a la interfaz Request de Express para poder escribir req.user.
+// Es opcional porque en las rutas publicas nadie la rellena.
 declare global {
     namespace Express {
         interface Request {
@@ -16,46 +18,43 @@ declare global {
     }
 }
 
-// Valida el header "Authorization: Bearer <token>" y deja el payload
-// decodificado en req.user para que checkRole y los controllers lo usen.
+// AUTENTICACION: valida el header "Authorization: Bearer <token>" y deja el
+// payload decodificado en req.user.
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     const header = req.headers.authorization;
 
-    if(!header || !header?.startsWith("Bearer ")){
-        return res.status(401).json({message: 'Token no proporcionado'})
+    if (!header || !header.startsWith("Bearer ")) {
+        return res.status(401).json({ message: "Token no proporcionado" });
     }
 
-    const token = header.split(" ")[1]
+    const token = header.split(" ")[1];
 
-    if(!token){
-        return res.status(401).json({message: 'token no proporcionado'})
+    // Cubre el caso "Authorization: Bearer " (con prefijo pero sin token).
+    if (!token) {
+        return res.status(401).json({ message: "Token no proporcionado" });
     }
 
-    try{
-
-        const secretKey = process.env.JWT_SECRET
-
-        const payload = jwt.verify(token, secretKey!) as AuthPayload;
-
+    try {
+        // verify() comprueba la firma y la expiracion; si algo falla, lanza.
+        const payload = jwt.verify(token, process.env.JWT_SECRET as string) as AuthPayload;
         req.user = payload;
-
-        next()
-
+        next();
     } catch {
-        return res.status(401).json({message: 'Token invalido o expirado'})
+        return res.status(401).json({ message: "Token inválido o expirado" });
     }
-} 
+};
 
-// Debe ir siempre despues de verifyToken, es el que llena req.user.
-// Uso: checkRole("admin") o checkRole("admin", "manager").
-export const checkRole= (...Roles: string[]) => {
+// AUTORIZACION: debe ir siempre despues de verifyToken, que es quien llena
+// req.user. Uso: checkRole("admin") o checkRole("admin", "manager").
+export const checkRole = (...roles: string[]) => {
     return (req: Request, res: Response, next: NextFunction) => {
         const user = req.user;
 
-        if(!user || !Roles.includes( user.role)) {
-
-            return res.status(403).json({message: 'No tienes permiso para acceder'})
+        if (!user || !roles.includes(user.role)) {
+            // 403 = se quien eres, pero no puedes. Distinto del 401.
+            return res.status(403).json({ message: "No tienes permiso para acceder" });
         }
-        next()
-    }
-}
+
+        next();
+    };
+};

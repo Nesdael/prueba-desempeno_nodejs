@@ -97,6 +97,8 @@ router.post("/", verifyToken, checkRole("admin"), validateRequest(createMedicati
  *         description: Medicamento actualizado
  *       400:
  *         description: Datos inválidos
+ *       404:
+ *         description: Medicamento no encontrado
  *       403:
  *         description: Rol sin permiso
  */

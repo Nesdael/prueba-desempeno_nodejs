@@ -3,6 +3,9 @@ import db from "../config/db.js";
 import Warehouses from "./warehouses.model.js";
 import Medications from "./medications.model.js";
 
+// Tabla intermedia entre Warehouses y Medications. Se modela como entidad
+// propia (y no con belongsToMany) porque la relacion tiene un dato suyo: la
+// cantidad disponible.
 class Inventories extends Model {
     declare id: string;
     declare warehouse_id: string;
@@ -19,14 +22,15 @@ Inventories.init(
             primaryKey: true,
         },
         warehouse_id: {
-            type: DataTypes.UUID,
+            type: DataTypes.UUID,   // FK -> Warehouses.id
             allowNull: false,
         },
         medication_id: {
-            type: DataTypes.UUID,
+            type: DataTypes.UUID,   // FK -> Medications.id
             allowNull: false,
         },
         quantity: {
+            // Se descuenta al crear una solicitud y se devuelve si se rechaza.
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0,
@@ -42,8 +46,8 @@ Inventories.init(
         sequelize: db,
         timestamps: true,
         tableName: "Inventories",
-        // Un medicamento solo puede tener una fila de stock por almacen; para
-        // sumar/restar cantidad se actualiza esa fila, no se crea otra.
+        // Una sola fila de stock por almacen y medicamento. Garantizado en la
+        // base, no solo en el codigo.
         indexes: [{ unique: true, fields: ["warehouse_id", "medication_id"] }],
     },
 );

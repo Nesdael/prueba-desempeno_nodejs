@@ -2,13 +2,13 @@ import { DataTypes, Model } from "sequelize";
 import db from "../config/db.js";
 import Cities from "./cities.model.js";
 
-class Warehouses extends Model{
+class Warehouses extends Model {
     declare id: string;
     declare name: string;
     declare city_id: string;
     declare address: string;
     declare is_active: boolean;
-};
+}
 
 Warehouses.init(
     {
@@ -20,10 +20,10 @@ Warehouses.init(
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true // no puede haber dos almacenes con el mismo nombre
+            unique: true
         },
         city_id: {
-            type: DataTypes.UUID,
+            type: DataTypes.UUID,   // FK -> Cities.id
             allowNull: false
         },
         address: {
@@ -42,6 +42,8 @@ Warehouses.init(
     }
 );
 
+// Se declara en los dos sentidos: hasMany habilita el include desde Cities y
+// belongsTo desde Warehouses. Ademas asi db.sync crea la FK real en Postgres.
 Cities.hasMany(Warehouses, { foreignKey: 'city_id', as: 'warehouses' });
 Warehouses.belongsTo(Cities, { foreignKey: 'city_id', as: 'city' });
 
