@@ -20,7 +20,7 @@ const options: swaggerJSDoc.Options = {
             schemas: {
                 RegisterUser: {
                     type: "object",
-                    required: ["name", "email", "password", "role"],
+                    required: ["name", "email", "password"],
                     properties: {
                         name: {
                             type: "string",
@@ -33,11 +33,6 @@ const options: swaggerJSDoc.Options = {
                         password: {
                             type: "string",
                             example: "Admin123"
-                        },
-                        role: {
-                            type: "string",
-                            enum: ["admin", "manager"],
-                            example: "admin"
                         }
                     }
                 },

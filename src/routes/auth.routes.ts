@@ -10,7 +10,7 @@ const router = Router();
  * /api/auth/register:
  *   post:
  *     summary: Registrar usuario
- *     description: Endpoint sin restriccion, el mismo usuario elige el rol con el que se registra.
+ *     description: Endpoint publico. El usuario se crea siempre con rol manager; los admin se crean con los seeders.
  *     tags:
  *       - Auth
  *     requestBody:
@@ -35,10 +35,10 @@ const router = Router();
  *                   example: Nestor Duran
  *                 email:
  *                   type: string
- *                   example: admin@medicare.com
+ *                   example: laura@medicare.com
  *                 role:
  *                   type: string
- *                   example: admin
+ *                   example: manager
  *       400:
  *         description: Datos invalidos o email ya registrado
  *         content:

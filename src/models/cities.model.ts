@@ -20,12 +20,12 @@ Cities.init(
             allowNull: false
         },
         code_name: {
+            // Codigo DANE del municipio. Los seeders buscan la ciudad por aqui
+            // para no depender de tildes ni variantes del nombre.
             type: DataTypes.STRING,
             unique: true,
             allowNull: false
         },
-        // Borrado logico en vez de DELETE: hay tablas que referencian ciudades
-        // (Clinics, Warehouses) y no queremos perder el historico.
         is_active: {
             type: DataTypes.BOOLEAN,
             defaultValue: true,

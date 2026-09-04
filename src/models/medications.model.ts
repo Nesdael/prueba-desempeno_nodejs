@@ -1,26 +1,26 @@
 import { DataTypes, Model } from "sequelize";
 import db from "../config/db.js";
 
-class Medications extends Model{
+class Medications extends Model {
     declare id: string;
     declare name: string;
     declare presentation: string;
     declare is_active: boolean;
-};
+}
 
 Medications.init(
     {
-        id:{
+        id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true
         },
         name: {
             type: DataTypes.STRING,
-            unique: true,
             allowNull: false
         },
         presentation: {
+            // Forma farmaceutica y dosis: "Tableta 500mg", "Ampolla 2ml".
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -29,16 +29,16 @@ Medications.init(
             allowNull: false,
             defaultValue: true
         }
-    },{
+    }, {
         sequelize: db,
         timestamps: false,
         tableName: "Medications",
-        // ojo: name ya es unico por si solo (ver arriba), asi que este indice
-        // compuesto no aporta nada mientras esa restriccion siga activa.
+        // Lo unico es la combinacion nombre + presentacion, no el nombre solo:
+        // asi pueden convivir "Ibuprofeno 400mg" e "Ibuprofeno 600mg".
         indexes: [
             {
-            unique: true,
-            fields: ['name', 'presentation']
+                unique: true,
+                fields: ['name', 'presentation']
             }
         ]
     }

@@ -1,6 +1,6 @@
-// Barrel: cada modelo ya declara sus propias asociaciones (hasMany/belongsTo)
-// en su propio archivo, aca solo se juntan los imports para que app.ts los
-// cargue todos con un solo import.
+// Un modelo solo queda registrado en Sequelize cuando su archivo se ejecuta.
+// app.ts importa este archivo para forzar la carga de los ocho de golpe.
+// El orden importa: cada modelo debe cargarse despues de los que referencia.
 import Cities from "./cities.model.js";
 import Roles from "./roles.model.js";
 import Medications from "./medications.model.js";

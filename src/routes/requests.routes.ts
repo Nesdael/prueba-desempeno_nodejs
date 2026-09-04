@@ -128,6 +128,8 @@ router.post(
  *         description: Estado actualizado
  *       400:
  *         description: Estado no válido o solicitud ya finalizada
+ *       404:
+ *         description: Solicitud no encontrada
  *       403:
  *         description: Rol sin permiso
  */

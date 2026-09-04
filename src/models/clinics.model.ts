@@ -25,6 +25,8 @@ Clinics.init(
             allowNull: false,
         },
         nit: {
+            // STRING y no numero: el NIT lleva guion y digito de verificacion
+            // ("890102345-1").
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
@@ -34,11 +36,11 @@ Clinics.init(
             allowNull: false,
         },
         city_id: {
-            type: DataTypes.UUID,
+            type: DataTypes.UUID,   // FK -> Cities.id
             allowNull: false,
         },
         manager_id: {
-            type: DataTypes.UUID,
+            type: DataTypes.UUID,   // FK -> Users.id
             allowNull: false,
         },
         is_active: {
@@ -57,8 +59,8 @@ Clinics.init(
 Cities.hasMany(Clinics, { foreignKey: "city_id", as: "clinics" });
 Clinics.belongsTo(Cities, { foreignKey: "city_id", as: "city" });
 
-// manager_id apunta a un Users, el alias va como "managedClinics" para no
-// chocar con el "clinics" que ya usa Cities.
+// El alias va como "managedClinics" para no chocar con el "clinics" de Cities:
+// los alias deben ser unicos por modelo de origen.
 Users.hasMany(Clinics, { foreignKey: "manager_id", as: "managedClinics" });
 Clinics.belongsTo(Users, { foreignKey: "manager_id", as: "manager" });
 

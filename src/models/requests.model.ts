@@ -5,7 +5,8 @@ import Medications from "./medications.model.js";
 import Warehouses from "./warehouses.model.js";
 import Users from "./users.model.js";
 
-
+// Entidad central: "la clinica X le pide al almacen Y una cantidad Z del
+// medicamento M, y el usuario U la registro". De ahi sus cuatro FK.
 class Requests extends Model {
     declare id: string;
     declare clinic_id: string;
@@ -25,18 +26,20 @@ Requests.init(
             primaryKey: true,
         },
         clinic_id: {
-            type: DataTypes.UUID,
+            type: DataTypes.UUID,   // FK -> Clinics.id (quien pide)
             allowNull: false,
         },
         medication_id: {
-            type: DataTypes.UUID,
+            type: DataTypes.UUID,   // FK -> Medications.id (que se pide)
             allowNull: false,
         },
         warehouse_id: {
-            type: DataTypes.UUID,
+            type: DataTypes.UUID,   // FK -> Warehouses.id (a quien se le pide)
             allowNull: false,
         },
         user_id: {
+            // FK -> Users.id. No viene del body: lo pone el controlador a
+            // partir del token, para que nadie pueda suplantar a otro.
             type: DataTypes.UUID,
             allowNull: false,
         },
@@ -45,10 +48,9 @@ Requests.init(
             allowNull: false,
             validate: { min: 1 },
         },
-        // Flujo de una solicitud: pendiente -> aprobada/rechazada -> entregada.
-        // No hay todavia logica que fuerce ese orden, solo se valida que el
-        // valor este dentro de este set.
         status: {
+            // pendiente -> aprobada / rechazada -> entregada.
+            // "entregada" y "rechazada" son finales (ver requests.services.ts).
             type: DataTypes.STRING,
             allowNull: false,
             defaultValue: "pendiente",
@@ -64,11 +66,14 @@ Requests.init(
     },
     {
         sequelize: db,
+        // createdAt se usa para ordenar el historial de solicitudes.
         timestamps: true,
         tableName: "Requests",
     },
 );
 
+// Gracias a estas relaciones los servicios pueden hacer include y devolver los
+// nombres de clinica, medicamento, almacen y usuario en vez de solo los UUID.
 Clinics.hasMany(Requests, { foreignKey: "clinic_id", as: "requests" });
 Requests.belongsTo(Clinics, { foreignKey: "clinic_id", as: "clinic" });
 
